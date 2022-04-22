@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { ToastContainer } from "react-toastify";
+import http from "./services/httpService";
+import Products from "./components/products";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = { isAdding: false };
+
+  handleClick() {
+    this.setState({ isAdding: true });
+  }
+
+  hideAddRow = () => {
+    this.setState({ isAdding: false });
+  };
+
+  render() {
+    return (
+      <React.Fragment>
+        <ToastContainer />
+        <div className="row m-5">
+          <button
+            type="button"
+            onClick={() => this.handleClick()}
+            className="btn btn-primary m-2"
+          >
+            Add
+          </button>
+          <Products
+            isAdding={this.state.isAdding}
+            onAddProduct={this.hideAddRow}
+          />
+        </div>
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;
